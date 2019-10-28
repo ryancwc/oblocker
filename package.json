@@ -1,0 +1,32 @@
+{
+  "name": "oBlocker",
+  "main": "index.html",
+  "author": "",
+  "toolbar": true,
+  "version": "1.0.0",
+  "description": "oBlocker desktop App",
+  "window": {
+    "icon": "app.png"
+  },
+  "devDependencies": {
+    "nwjs-builder-phoenix": "^1.15.0"
+  },
+  "build": {
+    "nwVersion": "0.33.4",
+    "nwFlavor": "sdk",
+    "packed": true,
+    "targets": [
+      "nsis"
+    ]
+  },
+  "build.win": {
+    "icon": "icon.ico"
+  },
+  "scripts": {
+    "dist": "build --tasks win-x86,win-x64,mac-x64 --mirror https://dl.nwjs.io/ .",
+    "start": "run --x86 --mirror https://dl.nwjs.io/ ."
+  },
+  "dependencies": {
+    "auto-launch": "^5.0.5"
+  }
+}

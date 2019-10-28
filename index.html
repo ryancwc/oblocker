@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>OBlocker</title>
+  <link rel="stylesheet" href="nativize.css">
+  <link rel="stylesheet" href="main.css">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Mono" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="scripts.js" type="text/javascript"></script>
+  <script type="text/javascript">
+
+    function chromeextension(){
+      gui.Shell.openExternal('https://oblocker.com/chromedownload');
+    }
+
+    function openwebsite(){
+      gui.Shell.openExternal('https://oblocker.com');
+    }
+
+    function saveSite(){
+        //in here we can do the ajax after validating the field isn't empty.
+        if($("#site1").val()!="" && $("#site2").val()!="" && $("#site3").val()!="")  {
+            $.ajax({
+                url: "https://oblocker.com/data_load1942/votr.php",
+                method: "POST",
+                data: { site1:$("#site1").val(),site2:$("#site2").val(),site3:$("#site3").val() }, //your form data to post goes here as a json object
+            });
+            alert("Saved");
+        } else {
+            //notify the user they need to enter data
+            alert("Please fill in all 3 websites");
+        }
+    };
+  </script>
+</head>
+<body>
+
+  <nav class="nav is-shown js-nav">
+    <header class="nav-header">
+      <h1 class="nav-title"><strong>OBlocker</strong> <br><strong class="subtitle">Block Ads without Killing the Web</strong></h1>
+    </header>
+
+    <div class="nav-category"><p>
+OBlocker uses your spare processing power (~25% of your CPU) to fold proteins and earn cryptocurrency and pays (up to) 3 websites you list below. Who do you want to support? </p>
+  <form id="sitesform">
+  Website 1: <input type="text" pattern="^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$" name="name" placeholder="wikipedia.org" id="site1" required><br>
+  Website 2: <input type="text" pattern="^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$" name="name" placeholder="archive.org" id="site2" required><br>
+  Website 3: <input type="text" pattern="^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$" name="name" placeholder="nytimes.com" id="site3" required><br>
+  <input type="submit" value="Save" onclick="saveSite()" class="nav-footer-button" id="savesite">
+  </form>
+  </div>
+    <footer class="nav-footer">
+      <!-- <button type="button" id="button-about" data-modal="about" class="nav-footer-button">How does it work?</button> -->
+      <button type="button" id="button-about" data-modal="about" class="nav-footer-button" onclick="openwebsite()">How does it work?</button>
+
+    </footer>
+  </nav>
+  <script>
+    // var minenow = true;
+
+    function disableMining() {
+        miner.stop();
+        document.getElementById("button-mining-disable").style.display = "none";
+        document.getElementById("button-mining-enable").style.display = "inline";
+        document.getElementById("indicator").style.color = "#fc3737";
+        document.getElementById("indicator").innerHTML = "Deactivated";
+        document.getElementById("statuson").style.display = "none";
+        document.getElementById("statusoff").style.display = "block";
+
+        minenow = false;
+    }
+
+    function enableMining() {
+        document.getElementById("indicator").style.color = "#3cb272";
+        document.getElementById("indicator").innerHTML = "Activated";
+        document.getElementById("statusoff").style.display = "none";
+        document.getElementById("statuson").style.display = "block";
+    }
+    global.window = window; // needed by externally linked scripts
+  </script>
+  <main class="content is-shown js-content">
+    <br><br>
+    <script type="text/javascript">
+
+      const links = document.querySelectorAll('a[href]')
+
+      Array.prototype.forEach.call(links, (link) => {
+        const url = link.getAttribute('href')
+        if (url.indexOf('http') === 0) {
+          link.addEventListener('click', (e) => {
+            e.preventDefault()
+            shell.openExternal(url)
+          })
+        }
+      })
+
+    </script>
+    <div class = "coding">
+      <h1 style="display: inline;" >Our Recommended Adblocker </h1><a style="text-decoration: none;"href="#open-modal"><button type="button" id="button-chrome" class="adblock-button">Learn More</button></a> <br>
+      <h1 style="display: inline;" >Folding Controls </h1><button type="button" id="pauseBtn" class="mining-button" onclick="pauseButton()">Pause Folding</button> 
+      <p><em>OBlocker will minimize to your tray when you close it. If you want to stop mining, right click the tray icon and press "Exit oBlocker" or simply Pause Folding above.</p></em>
+    </div>
+    <p></p>
+
+    <div id="open-modal" class="modal-window">
+      <div>
+        <a href="#" title="Close" class="modal-close">Close</a>
+        <h1>Our Recommended Adblocker</h1>
+        <div>While oBlocker works with any and all ad blockers, we highly recommend Popper Stopper Pro. Available for Google Chrome, it allows users to automatically block any popup and popunder ads that show up. It is incredibly simple to use and install, working outside the box but still including customizable features. Popups are some of the most intrusive forms of advertising, so using Popper Stopper Pro will improve your browsing experience immensely.</p>
+        <button type="button" id="button-chrome" class="adblock-button" onclick="chromeextension()">Download Popper Stopper Pro</button><br></div>
+        </div>
+    </div>
+
+    <div id="statuson">
+      <img src = "https://i.imgur.com/NQwv9K9.png" width = 160px style = "margin-top:65px;"></div>
+    <!-- <span class ="pulse"></span> -->
+    <div id="statusoff"><img src = "https://i.imgur.com/IILNnRO.png" width = 160px style = "margin-top:65px;"></div>
+    
+    <!-- <button type="button" onclick="pauseButton()" id="pauseBtn">Pause Folding</button> -->
+    <iframe id="foo" src="http://nacl.foldingathome.org/" style="width:0; height:0; border:0; border:none"  partition="trusted" onload="loaded();"></iframe>
+    <div id ="container">
+    <div id ="statusbox">
+      <strong><h2 id="Status">Status: Loading...</h2></strong><br>
+      <!-- <h2>Current Protein Folding PPD:</h2> --><h2 id="PPD">Estimated Points per Day (PPD): Loading..</h2><br>
+      <h2>Donating Processing Power: <span class="success" id="indicator">Activated</span></h2><br>
+      <h2>Currently Running: Protein Folding on the Stanford Folding@Home Network</h2>
+    </div>
+    </div>
+  </main>
+
+</body>
+</html>
